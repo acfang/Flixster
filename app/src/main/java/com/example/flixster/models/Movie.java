@@ -16,6 +16,8 @@ public class Movie {
     String title;
     String overview;
     Double voteAverage;
+    // for retrieving videos from the api, this is the movie id key in the JSON file
+    Integer id;
 
     public Movie() {}
 
@@ -25,6 +27,7 @@ public class Movie {
         title = jsonObject.getString("title");
         overview = jsonObject.getString("overview");
         voteAverage = jsonObject.getDouble("vote_average");
+        id = jsonObject.getInt("id");
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {
@@ -53,5 +56,9 @@ public class Movie {
 
     public Double getVoteAverage() {
         return voteAverage;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }
