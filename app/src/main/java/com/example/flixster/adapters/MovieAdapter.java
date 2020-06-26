@@ -3,6 +3,8 @@ package com.example.flixster.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.constraintlayout.widget.Placeholder;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.flixster.MainActivity;
 import com.example.flixster.MovieDetailsActivity;
 import com.example.flixster.R;
 import com.example.flixster.databinding.ItemMovieBinding;
@@ -53,7 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         return new ViewHolder(movieView);
     }
 
-    // Invloves populating data into the view through holder
+    // Involves populating data into the view through holder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("MovieAdapter", "onBindViewHolder " + position);
@@ -80,6 +83,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
             tvTitle = binding.tvTitle;
             tvOverview = binding.tvOverview;
             ivPoster = binding.ivPoster;
+
+            tvTitle.setTextColor(Color.WHITE);
+            tvOverview.setTextColor(Color.GRAY);
+
+            Typeface tfTitle = Typeface.createFromAsset(context.getAssets(),
+                    "Rubik-Bold.ttf");
+            tvTitle.setTypeface(tfTitle);
+
+            Typeface tfOverview = Typeface.createFromAsset(context.getAssets(),
+                    "Rubik-Regular.ttf");
+            tvOverview.setTypeface(tfOverview);
+
             itemView.setOnClickListener(this);
         }
 
@@ -101,7 +116,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
             // rounded corners: https://guides.codepath.org/android/Displaying-Images-with-the-Glide-Library#transformations
 
-            int radius = 30;
+            int radius = 25;
             int margin = 10;
 
             Glide.with(context)

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Set a Layout Manager on the Recycler View (so it knows how to layout the different views onto the screen)
         binding.rvMovies.setLayoutManager(new LinearLayoutManager(this));
+
+        RelativeLayout relativeLayout = binding.mainRL;
+        relativeLayout.setBackgroundColor(Color.rgb(24,24,24));
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(NOW_PLAYING_URL, new JsonHttpResponseHandler() {
