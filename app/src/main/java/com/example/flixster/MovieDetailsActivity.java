@@ -1,6 +1,7 @@
 package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -186,6 +187,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         castNames.add((TextView) binding.cast4Name);
         castRoles.add((TextView) binding.cast4Role);
 
+        // make call to credits API
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(castUrl, new JsonHttpResponseHandler() {
             @Override

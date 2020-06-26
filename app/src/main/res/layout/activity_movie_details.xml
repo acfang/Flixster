@@ -100,7 +100,6 @@
 
             </RelativeLayout>
 
-
             <TextView
                 android:id="@+id/tvCast"
                 android:layout_width="wrap_content"
