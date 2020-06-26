@@ -48,4 +48,16 @@
         tools:text="After he and his wife are murdered, marine Ray Garrison is resurrected by a team of scientists. Enhanced with nanotechnology, he becomes a superhuman, biotech killing machine—'Bloodshot'. As Ray first trains with fellow super-soldiers, he cannot recall anything from his former life. But when his memories flood back and he remembers the man that killed both him and his wife, he breaks out of the facility to get revenge, only to discover that there's more to the conspiracy than he thought."
         android:lines="8"
         android:layout_marginEnd="10dp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4d4e4f"
+        android:visibility="visible"
+        android:layout_below="@+id/ivPoster"
+        android:layout_alignStart="@+id/ivPoster"
+        android:layout_alignEnd="@+id/tvOverview"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>
