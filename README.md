@@ -38,7 +38,7 @@ GIF created with [Kap](https://getkap.co/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I originally wanted to create tabs for the cast and similar movies on the details screen, but I wasn't able to correctly implement them as fragments.
 
 ## Open-source libraries used
 
