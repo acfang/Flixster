@@ -18,6 +18,7 @@ public class Movie {
     Double voteAverage;
     // for retrieving videos from the api, this is the movie id key in the JSON file
     Integer id;
+    String releaseDate;
 
     public Movie() {}
 
@@ -28,6 +29,7 @@ public class Movie {
         overview = jsonObject.getString("overview");
         voteAverage = jsonObject.getDouble("vote_average");
         id = jsonObject.getInt("id");
+        releaseDate = jsonObject.getString("release_date");
     }
 
     public static List<Movie> fromJsonArray(JSONArray movieJsonArray) throws JSONException {
@@ -60,5 +62,9 @@ public class Movie {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 }

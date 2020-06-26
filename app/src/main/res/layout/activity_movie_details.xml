@@ -39,12 +39,21 @@
                 android:textSize="24sp"
                 tools:text="Movie Title" />
 
+            <TextView
+                android:id="@+id/tvRelease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitle"
+                android:layout_alignStart="@+id/tvTitle"
+                tools:text="Release Date: "
+                android:layout_marginTop="5dp"/>
+
             <RatingBar
                 android:id="@+id/rbVoteAverage"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvTitle"
+                android:layout_below="@+id/tvRelease"
                 android:layout_alignStart="@+id/tvTitle"
                 android:layout_marginTop="5dp"
                 android:numStars="5"
@@ -123,8 +132,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast0Img"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="15dp"
                     tools:text="Cast Member Name" />
 
                 <TextView
@@ -132,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast0Name"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="130dp"
                     android:layout_marginTop="20dp"
                     tools:text="Character Name" />
 
@@ -159,8 +168,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast1Img"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="15dp"
                     tools:text="Cast Member Name" />
 
                 <TextView
@@ -168,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast1Name"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="130dp"
                     android:layout_marginTop="20dp"
                     tools:text="Character Name" />
 
@@ -195,8 +204,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast2Img"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="15dp"
                     tools:text="Cast Member Name" />
 
                 <TextView
@@ -204,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast2Name"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="130dp"
                     android:layout_marginTop="20dp"
                     tools:text="Character Name" />
 
@@ -231,8 +240,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast3Img"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="15dp"
                     tools:text="Cast Member Name" />
 
                 <TextView
@@ -240,7 +249,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast3Name"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="130dp"
                     android:layout_marginTop="20dp"
                     tools:text="Character Name" />
 
@@ -267,8 +276,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast4Img"
-                    android:layout_marginStart="150dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="130dp"
+                    android:layout_marginTop="15dp"
                     tools:text="Cast Member Name" />
 
                 <TextView
@@ -276,7 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/cast4Name"
-                    android:layout_marginStart="150dp"
+                    android:layout_marginStart="130dp"
                     android:layout_marginTop="20dp"
                     tools:text="Character Name" />
 

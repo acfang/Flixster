@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import okhttp3.Headers;
 
@@ -37,28 +39,20 @@ public class MovieDetailsActivity extends AppCompatActivity {
     ImageView ivBackdrop;
     TextView tvTitle;
     TextView tvOverview;
+    TextView tvRelease;
     RatingBar rbVoteAverage;
 
     ActivityMovieDetailsBinding binding;
 
     String videoId = "";
 
+    // the "Cast" header
     TextView tvCast;
-    ImageView cast0Img;
-    TextView cast0Name;
-    TextView cast0Role;
-    ImageView cast1Img;
-    TextView cast1Name;
-    TextView cast1Role;
-    ImageView cast2Img;
-    TextView cast2Name;
-    TextView cast2Role;
-    ImageView cast3Img;
-    TextView cast3Name;
-    TextView cast3Role;
-    ImageView cast4Img;
-    TextView cast4Name;
-    TextView cast4Role;
+
+    // for the cast pictures, names, and characters
+    ArrayList<ImageView> castImages;
+    ArrayList<TextView> castNames;
+    ArrayList<TextView> castRoles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +66,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ivBackdrop = (ImageView) binding.ivBackdrop;
         tvTitle = (TextView) binding.tvTitle;
         tvOverview = (TextView) binding.tvOverview;
+        tvRelease = (TextView) binding.tvRelease;
         rbVoteAverage = (RatingBar) binding.rbVoteAverage;
         tvCast = (TextView) binding.tvCast;
 
@@ -79,10 +74,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         movie = (Movie) Parcels.unwrap(getIntent().getParcelableExtra(Movie.class.getSimpleName()));
         Log.d("MovieDetailsActivity", String.format("Showing details for '%s'", movie.getTitle()));
 
-        // set title and overview
+        // set title, overview, and release date
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
+        tvRelease.setText("Release Date: "+ movie.getReleaseDate());
 
+        // changing font to Rubik Bold and Regular, changing color
         Typeface tfTitle = Typeface.createFromAsset(getAssets(),
                 "Rubik-Bold.ttf");
         tvTitle.setTypeface(tfTitle);
@@ -91,10 +88,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
         Typeface tfOverview = Typeface.createFromAsset(getAssets(),
                 "Rubik-Regular.ttf");
         tvOverview.setTypeface(tfOverview);
+        tvRelease.setTypeface(tfOverview);
 
         tvTitle.setTextColor(Color.WHITE);
         tvCast.setTextColor(Color.WHITE);
         tvOverview.setTextColor(Color.GRAY);
+        tvRelease.setTextColor(Color.GRAY);
 
         // vote average is 0 to 10, convert to 0 to 5 by dividing by 2
         float voteAverage = movie.getVoteAverage().floatValue();
@@ -103,6 +102,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
         RelativeLayout relativeLayout = binding.movieDetailsRL;
         relativeLayout.setBackgroundColor(Color.rgb(24,24,24));
 
+        getVideos();
+
+        getCast();
+    }
+
+    // retrieves the YouTube trailer videos for each movie when the movie details page is accessed
+    private void getVideos() {
         String videoUrl = "https://api.themoviedb.org/3/movie/" + movie.getId() + "/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
 
         AsyncHttpClient client = new AsyncHttpClient();
@@ -151,28 +157,36 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 getBaseContext().startActivity(intent);
             }
         });
+    }
 
+    // retrieves the cast members' names, pictures, and characters to display on the movie details page
+    private void getCast() {
         // get cast
         String castUrl = "https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US";
 
         final String castPicUrl = "https://image.tmdb.org/t/p/w342";
 
-        cast0Img = (ImageView) binding.cast0Img;
-        cast0Name = (TextView) binding.cast0Name;
-        cast0Role = (TextView) binding.cast0Role;
-        cast1Img = (ImageView) binding.cast1Img;
-        cast1Name = (TextView) binding.cast1Name;
-        cast1Role = (TextView) binding.cast1Role;
-        cast2Img = (ImageView) binding.cast2Img;
-        cast2Name = (TextView) binding.cast2Name;
-        cast2Role = (TextView) binding.cast2Role;
-        cast3Img = (ImageView) binding.cast3Img;
-        cast3Name = (TextView) binding.cast3Name;
-        cast3Role = (TextView) binding.cast3Role;
-        cast4Img = (ImageView) binding.cast4Img;
-        cast4Name = (TextView) binding.cast4Name;
-        cast4Role = (TextView) binding.cast4Role;
+        castImages = new ArrayList<ImageView>();
+        castNames = new ArrayList<TextView>();
+        castRoles = new ArrayList<TextView>();
 
+        castImages.add((ImageView) binding.cast0Img);
+        castNames.add((TextView) binding.cast0Name);
+        castRoles.add((TextView) binding.cast0Role);
+        castImages.add((ImageView) binding.cast1Img);
+        castNames.add((TextView) binding.cast1Name);
+        castRoles.add((TextView) binding.cast1Role);
+        castImages.add((ImageView) binding.cast2Img);
+        castNames.add((TextView) binding.cast2Name);
+        castRoles.add((TextView) binding.cast2Role);
+        castImages.add((ImageView) binding.cast3Img);
+        castNames.add((TextView) binding.cast3Name);
+        castRoles.add((TextView) binding.cast3Role);
+        castImages.add((ImageView) binding.cast4Img);
+        castNames.add((TextView) binding.cast4Name);
+        castRoles.add((TextView) binding.cast4Role);
+
+        AsyncHttpClient client = new AsyncHttpClient();
         client.get(castUrl, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -184,55 +198,31 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     Log.d("MovieDetailsActivity", "Results: "+ results);
 
                     if (results != null) {
-                        // get movie YouTube video key from the first JSON object from accessing the API
+                        // get cast list from credits API
 
                         int radius = 30;
                         int margin = 10;
 
-                        Glide.with(MovieDetailsActivity.this)
-                                .load(castPicUrl + results.getJSONObject(0).getString("profile_path"))
-                                .placeholder(R.drawable.flicks_movie_placeholder)
-                                .fitCenter()
-                                .transform(new RoundedCornersTransformation(radius, margin))
-                                .into(cast0Img);
-                        cast0Name.setText(results.getJSONObject(0).getString("name"));
-                        cast0Role.setText(results.getJSONObject(0).getString("character"));
+                        Typeface rubikReg = Typeface.createFromAsset(getAssets(),
+                                "Rubik-Regular.ttf");
 
-                        Glide.with(MovieDetailsActivity.this)
-                                .load(castPicUrl + results.getJSONObject(1).getString("profile_path"))
-                                .placeholder(R.drawable.flicks_movie_placeholder)
-                                .fitCenter()
-                                .transform(new RoundedCornersTransformation(radius, margin))
-                                .into(cast1Img);
-                        cast1Name.setText(results.getJSONObject(1).getString("name"));
-                        cast1Role.setText(results.getJSONObject(1).getString("character"));
+                        for (int i = 0; i < 5; i++) {
+                            // load the cast images, names, and characters
+                            Glide.with(MovieDetailsActivity.this)
+                                    .load(castPicUrl + results.getJSONObject(i).getString("profile_path"))
+                                    .placeholder(R.drawable.flicks_movie_placeholder)
+                                    .fitCenter()
+                                    .transform(new RoundedCornersTransformation(radius, margin))
+                                    .into(castImages.get(i));
+                            castNames.get(i).setText(results.getJSONObject(i).getString("name"));
+                            castRoles.get(i).setText(results.getJSONObject(i).getString("character"));
 
-                        Glide.with(MovieDetailsActivity.this)
-                                .load(castPicUrl + results.getJSONObject(2).getString("profile_path"))
-                                .placeholder(R.drawable.flicks_movie_placeholder)
-                                .fitCenter()
-                                .transform(new RoundedCornersTransformation(radius, margin))
-                                .into(cast2Img);
-                        cast2Name.setText(results.getJSONObject(2).getString("name"));
-                        cast2Role.setText(results.getJSONObject(2).getString("character"));
-
-                        Glide.with(MovieDetailsActivity.this)
-                                .load(castPicUrl + results.getJSONObject(3).getString("profile_path"))
-                                .placeholder(R.drawable.flicks_movie_placeholder)
-                                .fitCenter()
-                                .transform(new RoundedCornersTransformation(radius, margin))
-                                .into(cast3Img);
-                        cast3Name.setText(results.getJSONObject(3).getString("name"));
-                        cast3Role.setText(results.getJSONObject(3).getString("character"));
-
-                        Glide.with(MovieDetailsActivity.this)
-                                .load(castPicUrl + results.getJSONObject(4).getString("profile_path"))
-                                .placeholder(R.drawable.flicks_movie_placeholder)
-                                .fitCenter()
-                                .transform(new RoundedCornersTransformation(radius, margin))
-                                .into(cast4Img);
-                        cast4Name.setText(results.getJSONObject(4).getString("name"));
-                        cast4Role.setText(results.getJSONObject(4).getString("character"));
+                            // style
+                            castNames.get(i).setTextColor(Color.WHITE);
+                            castRoles.get(i).setTextColor(Color.GRAY);
+                            castNames.get(i).setTypeface(rubikReg);
+                            castRoles.get(i).setTypeface(rubikReg);
+                        }
                     }
 
                     Log.i("MovieDetailsActivity", "Retrieved cast for movie " + videoId);
